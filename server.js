@@ -187,8 +187,13 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`🚀 Server successfully running at http://localhost:${PORT}`);
-    console.log(`📡 Ready to receive frontend form requests targeting Supabase.`);
-});
+// Export the app for serverless environments (like Vercel)
+module.exports = app;
+
+// Start the server locally only if not running inside a serverless handler
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server successfully running at http://localhost:${PORT}`);
+        console.log(`📡 Ready to receive frontend form requests targeting Supabase.`);
+    });
+}

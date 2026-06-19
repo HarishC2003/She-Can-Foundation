@@ -326,11 +326,73 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.style.transform = 'translateY(0)';
         }, 10);
 
+        // Accessibility
+        toast.setAttribute('aria-live', 'polite');
+        toast.setAttribute('role', 'status');
+
         // Slide-out and remove
         setTimeout(() => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateY(20px)';
             setTimeout(() => toast.remove(), 300);
         }, 6000);
+    }
+
+    // ---------------------------------------------------------
+    // 6. STAT COUNTERS ANIMATION
+    // ---------------------------------------------------------
+    const statNumbers = document.querySelectorAll('.stat-number[data-count]');
+    if (statNumbers.length > 0) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+        const duration = 1400; // ~1.4s
+        
+        const animateValue = (obj, start, end, duration, suffix) => {
+            if (prefersReducedMotion) {
+                obj.textContent = end + suffix;
+                return;
+            }
+            
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                
+                const currentVal = Math.floor(easeOutCubic(progress) * (end - start) + start);
+                obj.textContent = currentVal + suffix;
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    obj.textContent = end + suffix;
+                }
+            };
+            window.requestAnimationFrame(step);
+        };
+        
+        const statsObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const endVal = parseInt(target.getAttribute('data-count'), 10) || 0;
+                    const suffix = target.getAttribute('data-suffix') || '';
+                    animateValue(target, 0, endVal, duration, suffix);
+                    observer.unobserve(target);
+                }
+            });
+        }, { threshold: 0.4 });
+        
+        statNumbers.forEach(stat => {
+            statsObserver.observe(stat);
+        });
+    }
+
+    // ---------------------------------------------------------
+    // 7. FOOTER COPYRIGHT YEAR
+    // ---------------------------------------------------------
+    const copyrightYearElement = document.getElementById('copyrightYear');
+    if (copyrightYearElement) {
+        copyrightYearElement.textContent = new Date().getFullYear();
     }
 });

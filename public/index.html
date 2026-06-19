@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>She Can Foundation — Together We Can Change The World</title>
+    <meta name="description" content="She Can Foundation is a registered NGO empowering women and creating a more equitable society. We provide support, resources, and training to women globally.">
+    <meta name="keywords" content="NGO, women empowerment, charity, donation, volunteer, She Can Foundation, education">
+    <meta name="theme-color" content="#0c1b30">
     
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="She Can Foundation — Together We Can Change The World">
+    <meta property="og:description" content="Empowering women and creating a more equitable society through scholarships, training, and community advocacy.">
+    <meta property="og:image" content="https://shecanfoundation.org/assets/Header.png">
+    <meta property="og:url" content="https://shecanfoundation.org/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://shecanfoundation.org/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/images.jpg">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +49,7 @@
                     <li><a href="#story" class="nav-link">Our Story</a></li>
                     <li><a href="#certificates" class="nav-link">Our Certificate</a></li>
                     <li><a href="#donate" class="nav-link">Donate</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
             </nav>
             
@@ -46,6 +62,7 @@
     <main>
         <!-- Hero Section with Background image and Dark Overlay matching original website screenshot -->
         <section id="hero" class="hero-section">
+            <canvas id="hero3d-canvas" aria-hidden="true"></canvas>
             <div class="container hero-container">
                 <div class="hero-content">
                     <h1>Together We Can Change <span class="highlight-red">THE WORLD</span></h1>
@@ -72,19 +89,19 @@
                     <div class="story-stats-block">
                         <div class="stats-card">
                             <div class="stat-item">
-                                <span class="stat-number">1860</span>
+                                <span class="stat-number" data-count="1860" data-suffix="">0</span>
                                 <span class="stat-label">Registered NGO (Act XXI)</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">10k+</span>
+                                <span class="stat-number" data-count="10" data-suffix="k+">0</span>
                                 <span class="stat-label">Women Empowered</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">15+</span>
+                                <span class="stat-number" data-count="15" data-suffix="+">0</span>
                                 <span class="stat-label">Communities Reached</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">100%</span>
+                                <span class="stat-number" data-count="100" data-suffix="%">0</span>
                                 <span class="stat-label">Transparency Guaranteed</span>
                             </div>
                         </div>
@@ -171,6 +188,33 @@
                 </div>
             </div>
         </section>
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="subtitle">Get In Touch</span>
+                    <h2>Contact Us</h2>
+                    <p class="section-desc">Have any questions or want to partner with us? Drop us a message.</p>
+                </div>
+                <div class="contact-card">
+                    <form id="contactForm" class="modal-form contact-form">
+                        <div class="form-group">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" required placeholder="Jane Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" required placeholder="jane@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" required rows="4" placeholder="How can we help you?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -184,6 +228,7 @@
                     <li><a href="#story">Our Story</a></li>
                     <li><a href="#certificates">Our Certificate</a></li>
                     <li><a href="#donate">Donate</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-social">
@@ -205,7 +250,7 @@
         </div>
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2026 She Can Foundation. Registered under the Indian Society Act, 1860. All rights reserved.</p>
+                <p>&copy; <span id="copyrightYear">2026</span> She Can Foundation. Registered under the Indian Society Act, 1860. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -283,5 +328,7 @@
 
     <!-- Script File -->
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="hero3d.js" defer></script>
 </body>
 </html>

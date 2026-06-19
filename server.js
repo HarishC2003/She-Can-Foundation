@@ -20,35 +20,35 @@ app.use(express.static(path.join(__dirname)));
 // -------------------------------------------------------------
 function handleWebRoute(webHandler) {
     return async (req, res) => {
-        // Construct a standard Request object from the Express request
-        const protocol = req.protocol;
-        const host = req.get('host');
-        const url = `${protocol}://${host}${req.originalUrl}`;
-        
-        const headers = new Headers();
-        for (const [key, value] of Object.entries(req.headers)) {
-            if (value) {
-                if (Array.isArray(value)) {
-                    value.forEach(v => headers.append(key, v));
-                } else {
-                    headers.set(key, value);
+        try {
+            // Construct a standard Request object from the Express request
+            const protocol = req.protocol || 'http';
+            const host = req.get('host') || 'localhost';
+            const url = `${protocol}://${host}${req.originalUrl || '/'}`;
+            
+            const headers = new Headers();
+            for (const [key, value] of Object.entries(req.headers)) {
+                if (value) {
+                    if (Array.isArray(value)) {
+                        value.forEach(v => headers.append(key, v));
+                    } else {
+                        headers.set(key, value);
+                    }
                 }
             }
-        }
 
-        const requestInit = {
-            method: req.method,
-            headers: headers
-        };
+            const requestInit = {
+                method: req.method,
+                headers: headers
+            };
 
-        if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
-            requestInit.body = JSON.stringify(req.body);
-            headers.set('content-type', 'application/json');
-        }
+            if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
+                requestInit.body = JSON.stringify(req.body);
+                headers.set('content-type', 'application/json');
+            }
 
-        const webReq = new Request(url, requestInit);
-        
-        try {
+            const webReq = new Request(url, requestInit);
+            
             // Call the handler wrapped by withSupabase
             const webRes = await webHandler(webReq, {});
 
@@ -69,7 +69,7 @@ function handleWebRoute(webHandler) {
             }
         } catch (err) {
             console.error('❌ Express Adapter Handler Error:', err.message);
-            res.status(500).json({ success: false, message: err.message });
+            res.status(500).json({ success: false, message: `Server error: ${err.message}` });
         }
     };
 }

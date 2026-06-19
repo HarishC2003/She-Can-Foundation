@@ -282,7 +282,7 @@ body {
    ------------------------------------------------------------- */
 .hero-section {
     padding: 120px 0 80px 0;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55)), url('Header.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55)), url('assets/Header.png');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
@@ -629,7 +629,7 @@ body {
    8. FOOTER SECTION
    ------------------------------------------------------------- */
 .app-footer {
-    background-image: linear-gradient(rgba(12, 27, 48, 0.5), rgba(12, 27, 48, 0.7)), url('footer.png');
+    background-image: linear-gradient(rgba(12, 27, 48, 0.5), rgba(12, 27, 48, 0.7)), url('assets/footer.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
